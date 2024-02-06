@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace MyOriginalCodes\ApolloPhp\Validators;
 
-trait OnlyNumbers
+trait NotEmpty
 {
-    public function only_numbers(string $value): ?array
+    public function not_empty(string $value): ?array
     {
-        return $this->onlyNumbers($value);
+        return $this->notEmpty($value);
     }
 
-    public function onlyNumbers(string $value): ?array
+    public function notEmpty(string $value): ?array
     {
         echo "======yes========".PHP_EOL;
 
