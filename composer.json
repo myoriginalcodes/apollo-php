@@ -1,5 +1,6 @@
 {
     "name": "myoriginalcodes/apollo-php",
+    "version": "0.0.1",
     "description": "A small library created to validate php-cli projects",
     "keywords": ["apollo-php", "php-cli", "validator"],
     "type": "library",
