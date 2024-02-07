@@ -13,14 +13,20 @@ use PHPUnit\Framework\TestCase;
 class OnlyLettersTest extends TestCase
 {
     use OnlyLetters;
+    
+    private static bool $throwExceptions;
 
-    private static bool $throwExceptions = false;
+    private static array $errorsBag;
 
-    private static array $errorsBag = [];
+    public function setUp(): void
+    {
+        self::$throwExceptions = false;
+        self::$errorsBag = [];
+    }
 
     #[Test]
-    #[DataProvider('stringsDataProvider')]
-    public function ensureValidationWorksUsingValidStrings(string $value, string $bagKey): void
+    #[DataProvider('validStringsDataProvider')]
+    public function ensureValidationWorksUsingValidValues(string $value, string $bagKey): void
     {
         $this->onlyLetters($value, $bagKey);
 
@@ -47,7 +53,7 @@ class OnlyLettersTest extends TestCase
         $this->onlyLetters($value, $bagKey);
     }
 
-    public static function stringsDataProvider(): array
+    public static function validStringsDataProvider(): array
     {
         return [
             'empty' => ['', 'field1'],

@@ -14,13 +14,19 @@ class OnlyNumbersTest extends TestCase
 {
     use OnlyNumbers;
 
-    private static bool $throwExceptions = false;
+    private static bool $throwExceptions;
 
-    private static array $errorsBag = [];
+    private static array $errorsBag;
+
+    public function setUp(): void
+    {
+        self::$throwExceptions = false;
+        self::$errorsBag = [];
+    }
 
     #[Test]
-    #[DataProvider('numbersDataProvider')]
-    public function ensureValidationWorksUsingValidNumbers(string $value, string $bagKey): void
+    #[DataProvider('validNumbersDataProvider')]
+    public function ensureValidationWorksUsingValidValues(string $value, string $bagKey): void
     {
         $this->onlyNumbers($value, $bagKey);
 
@@ -47,7 +53,7 @@ class OnlyNumbersTest extends TestCase
         $this->onlyNumbers($value, $bagKey);
     }
 
-    public static function numbersDataProvider(): array
+    public static function validNumbersDataProvider(): array
     {
         return [
             'empty' => ['', 'field1'],
