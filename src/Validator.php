@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace MyOriginalCodes\ApolloPhp;
 
-use BadMethodCallException;
+use MyOriginalCodes\ApolloPhp\Exceptions\ValidatorNotFoundException;
 use MyOriginalCodes\ApolloPhp\Validators\Length;
 use MyOriginalCodes\ApolloPhp\Validators\NotEmpty;
 use MyOriginalCodes\ApolloPhp\Validators\OnlyLetters;
@@ -58,18 +58,18 @@ class Validator
         self::$throwExceptions = $throwExceptions;
         
         foreach($this->rules as $field => $validators){
-            foreach($validators as $validator => $args){ 
+            if(is_array($validators)){
+                foreach($validators as $validator => $args){ 
                 
-                $validatorMethod = $this->getValidatorMethod($validator, $args);
-
-                if(!method_exists($this, $validatorMethod)){
-                    throw new BadMethodCallException(
-                        sprintf("The validator %s does not exists.", $validatorMethod)
-                    );
-                }
-                
-                if(array_key_exists($field, $this->values) || array_key_exists($validatorMethod, self::MUST_CHECK_VALIDATORS)){
-                    $this->$validatorMethod($this->values[$field], $field, $args);
+                    $validatorMethod = $this->getValidatorMethod($validator, $args);
+    
+                    if(!method_exists($this, $validatorMethod)){
+                        throw new ValidatorNotFoundException($validatorMethod);
+                    }
+                    
+                    if(array_key_exists($field, $this->values) || array_key_exists($validatorMethod, self::MUST_CHECK_VALIDATORS)){
+                        $this->$validatorMethod($this->values[$field], $field, $args);
+                    }
                 }
             }
         }

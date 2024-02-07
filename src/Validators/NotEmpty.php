@@ -4,17 +4,22 @@ declare(strict_types=1);
 
 namespace MyOriginalCodes\ApolloPhp\Validators;
 
+use MyOriginalCodes\ApolloPhp\Exceptions\NotEmptyException;
+
 trait NotEmpty
 {
-    public function not_empty(string $value): ?array
+    public function not_empty(mixed $value, string $bagKey): void
     {
-        return $this->notEmpty($value);
+        $this->notEmpty($value, $bagKey);
     }
 
-    public function notEmpty(string $value): ?array
+    public function notEmpty(mixed $value, string $bagKey): void
     {
-        echo "======yes========".PHP_EOL;
-
-        return [];
+        if(empty($value)){
+            if(true === static::class::$throwExceptions){
+                throw new NotEmptyException($value, $bagKey);
+            }
+            static::class::$errorsBag[$bagKey]['not_empty'] = sprintf(NotEmptyException::MESSAGE, print_r($value, true), $bagKey);
+        }
     }
 }
