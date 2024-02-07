@@ -51,10 +51,10 @@ class OnlyLettersTest extends TestCase
     {
         return [
             'empty' => ['', 'field1'],
-            'mixed' => ['AbcDEfG', 'field1'],
-            'lowercase' => ['car', 'field2'],
-            'uppercase' => ['CAR', 'field3'],
-            'capitalized' => ['Car', 'field4'],
+            'mixed' => ['AbcDEfG', 'field2'],
+            'lowercase' => ['car', 'field3'],
+            'uppercase' => ['CAR', 'field4'],
+            'capitalized' => ['Car', 'field5'],
         ];
     }
 
