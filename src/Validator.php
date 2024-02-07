@@ -51,8 +51,8 @@ class Validator
 
     public function validate(bool $throwExceptions = false): Validator
     {
-        if(0 === $this->rules){
-            return $this->buildDataToReturn();   
+        if(0 === count($this->rules) || 0 === count($this->values)){
+            return $this;   
         }
 
         self::$throwExceptions = $throwExceptions;
@@ -69,15 +69,10 @@ class Validator
                 }
                 
                 if(array_key_exists($field, $this->values) || array_key_exists($validatorMethod, self::MUST_CHECK_VALIDATORS)){
-                    $this->$validatorMethod($this->values[$field], $field);
+                    $this->$validatorMethod($this->values[$field], $field, $args);
                 }
             }
         }
-        return $this->buildDataToReturn();
-    }
-
-    private function buildDataToReturn(): Validator
-    {
         return $this;
     }
 
