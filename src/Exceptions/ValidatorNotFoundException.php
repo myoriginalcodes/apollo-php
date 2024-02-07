@@ -7,4 +7,13 @@ namespace MyOriginalCodes\ApolloPhp\Exceptions;
 use Exception;
 
 class ValidatorNotFoundException extends Exception
-{}
+{
+    public const MESSAGE = "The validator %s was not found. Please check the documentation.";
+
+    public function __construct(mixed $value)
+    {
+        parent::__construct(
+            sprintf(self::MESSAGE, $value)
+        );
+    }
+}
