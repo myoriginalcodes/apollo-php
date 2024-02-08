@@ -30,23 +30,34 @@ class Validator
         public array $values = []
     ){}
 
-    public function setValues(array $values): Validator
+    public function setValues(array $values): void
     {   
         $this->values = $values;
-        
-        return $this;
     }
 
-    public function setRules(array $rules): Validator
+    public function setRules(array $rules): void
     {   
         $this->rules = $rules;
-        
-        return $this;
+    }
+
+    public function getValues(): array
+    {
+        return $this->values;
+    }
+
+    public function getRules(): array
+    {
+        return $this->rules;
     }
 
     public function getErrorsBag(): array
     {
         return self::$errorsBag;
+    }
+
+    public function getExceptionsBehavior(): bool
+    {
+        return self::$throwExceptions;
     }
 
     public function validate(bool $throwExceptions = false): Validator
@@ -61,7 +72,7 @@ class Validator
             if(is_array($validators)){
                 foreach($validators as $validator => $args){
                 
-                    $validatorMethod = $this->getValidatorMethod($validator, $args);
+                    $validatorMethod = is_numeric($validator) ? $args : $validator;
     
                     if(!method_exists($this, $validatorMethod)){
                         throw new ValidatorNotFoundException($validatorMethod);
@@ -74,11 +85,5 @@ class Validator
             }
         }
         return $this;
-    }
-
-    private function getValidatorMethod(mixed $validator, mixed $args): string
-    {
-        $validatorMethod = is_numeric($validator) ? $args : $validator;
-        return strtolower($validatorMethod);
     }
 }
