@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\Unit;
+namespace Tests\Feature;
 
 use MyOriginalCodes\ApolloPhp\Validator;
 use PHPUnit\Framework\Attributes\Test;
@@ -14,7 +14,7 @@ class ValidateRequiredTest extends TestCase
 
     public function setUp(): void
     {
-        $this->validator = new Validator();
+        $this->validator = new Validator;
     }
 
     #[Test]
