@@ -31,14 +31,14 @@ class Validator
     ){}
 
     public function setValues(array $values): Validator
-    {
+    {   
         $this->values = $values;
         
         return $this;
     }
 
     public function setRules(array $rules): Validator
-    {
+    {   
         $this->rules = $rules;
         
         return $this;
@@ -50,8 +50,8 @@ class Validator
     }
 
     public function validate(bool $throwExceptions = false): Validator
-    {
-        if(0 === count($this->rules) || 0 === count($this->values)){
+    {   
+        if(0 === count($this->rules) && 0 === count($this->values)){
             return $this;   
         }
 
@@ -59,16 +59,16 @@ class Validator
         
         foreach($this->rules as $field => $validators){
             if(is_array($validators)){
-                foreach($validators as $validator => $args){ 
+                foreach($validators as $validator => $args){
                 
                     $validatorMethod = $this->getValidatorMethod($validator, $args);
     
                     if(!method_exists($this, $validatorMethod)){
                         throw new ValidatorNotFoundException($validatorMethod);
                     }
-                    
-                    if(array_key_exists($field, $this->values) || array_key_exists($validatorMethod, self::MUST_CHECK_VALIDATORS)){
-                        $this->$validatorMethod($this->values[$field], $field, $args);
+                    if(array_key_exists($field, $this->values) || in_array($validatorMethod, self::MUST_CHECK_VALIDATORS)){
+                        $fieldValue = array_key_exists($field, $this->values) ? $this->values[$field] : null;
+                        $this->$validatorMethod($fieldValue, $field, $args);
                     }
                 }
             }
@@ -79,7 +79,6 @@ class Validator
     private function getValidatorMethod(mixed $validator, mixed $args): string
     {
         $validatorMethod = is_numeric($validator) ? $args : $validator;
-
         return strtolower($validatorMethod);
     }
 }

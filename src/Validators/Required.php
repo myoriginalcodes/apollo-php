@@ -14,7 +14,7 @@ trait Required
             if(true === static::class::$throwExceptions){
                 throw new RequiredException($value, $bagKey);
             }
-            static::class::$errorsBag[$bagKey]['not_empty'] = sprintf(RequiredException::MESSAGE, $bagKey);
+            static::class::$errorsBag[$bagKey]['required'] = sprintf(RequiredException::MESSAGE, $bagKey);
         }
     }
 }
