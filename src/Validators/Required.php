@@ -12,7 +12,7 @@ trait Required
     {
         if(null === $value){
             if(true === static::class::$throwExceptions){
-                throw new RequiredException($value, $bagKey);
+                throw new RequiredException($bagKey);
             }
             static::class::$errorsBag[$bagKey]['required'] = sprintf(RequiredException::MESSAGE, $bagKey);
         }

@@ -1,6 +1,6 @@
 {
     "name": "myoriginalcodes/apollo-php",
-    "version": "0.0.1",
+    "version": "0.0.1-dev",
     "description": "A small library created to validate php-cli projects",
     "keywords": ["apollo-php", "php-cli", "validator"],
     "type": "library",
@@ -14,9 +14,14 @@
     "authors": [
         {
             "name": "Edson Nascimento",
-            "email": "codes@myoriginalcod.es"
+            "email": "theoriginal@myoriginalcodes.com",
+            "homepage": "https://myoriginalcodes.com",
+            "role": "developer"
         }
     ],
+    "support": {
+        "email": "theoriginal@originalcodes.com"
+    },
     "minimum-stability": "stable",
     "require": {
         "php": "^8.1"
@@ -25,7 +30,7 @@
         "test": [
             "./vendor/bin/phpunit --testdox"
         ],
-        "phpstan": [
+        "stan": [
             "./vendor/bin/phpstan analyse --level=9 src tests"
         ]
     },
