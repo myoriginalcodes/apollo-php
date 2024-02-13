@@ -53,6 +53,13 @@ class OnlyLettersTest extends TestCase
         $this->onlyLetters($value, $bagKey);
     }
 
+    #[Test]
+    public function shouldAcceptSpacesWhenTheParameterIsTrue(): void
+    {
+        $this->onlyLetters("string with spaces", "field", ['allow_spaces' => true]);
+        $this->assertEmpty(self::$errorsBag);
+    }
+
     public static function validStringsDataProvider(): array
     {
         return [
@@ -67,9 +74,10 @@ class OnlyLettersTest extends TestCase
     public static function invalidStringsDataProvider(): array
     {
         return [
-          'mixed' => ['Abc1', 'field1'],
-          'numbers' => ['123', 'field2'],
-          'special_chars' => ['123-', 'field3'],
+          'space' => [' ', 'field1'],
+          'mixed' => ['Abc1', 'field2'],
+          'numbers' => ['123', 'field3'],
+          'special_chars' => ['123-', 'field4'],
         ];
     }
 }
