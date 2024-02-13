@@ -8,12 +8,12 @@ use MyOriginalCodes\ApolloPhp\Exceptions\OnlyLettersException;
 
 trait OnlyLetters
 {
-    public function only_letters(string $value, mixed $bagKey, array $args = []): void
+    public function only_letters(string $value, mixed $bagKey, ...$args): void
     {
         $this->onlyLetters($value, $bagKey, $args);
     }
 
-    public function onlyLetters(string $value, mixed $bagKey, array $args = []): void
+    public function onlyLetters(string $value, mixed $bagKey, ...$args): void
     {
         $regularExpression = $this->getRegularExpression($args);
 
@@ -26,11 +26,13 @@ trait OnlyLetters
     }
 
     private function getRegularExpression(array $args): string
-    {
-        foreach($args as $arg => $value){
-            if('allow_spaces' === $arg){ 
-                if(true === $value){
-                    return "/^[a-zA-Z\s]*$/";
+    {   
+        foreach($args as $arg => $settings){ 
+            foreach($settings as $setting => $value){
+                if('allow_spaces' === $setting){ 
+                    if(true === $value){
+                        return "/^[a-zA-Z\s]*$/";
+                    }
                 }
             }
         }
