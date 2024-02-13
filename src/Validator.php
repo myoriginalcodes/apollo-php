@@ -37,7 +37,7 @@ class Validator
 
     public function __construct(
         /** 
-         * @var array<string, array<string, mixed>>
+         * @var array<string, array<string|int, mixed>>
          */
         public array $rules = [],
         
@@ -50,7 +50,7 @@ class Validator
     /**
      * Set or modify the values that need to validated.
      * 
-     * @param array <string, mixed|null> $values
+     * @param array<string, mixed|null> $values
      *
      * @return void
      */
@@ -62,7 +62,7 @@ class Validator
     /**
      * Set the rules for validation.
      *
-     * @param array<string, array<string, mixed>> $rules
+     * @param array<string, array<string|int, mixed>> $rules
      *
      * @return void
      */
@@ -84,7 +84,7 @@ class Validator
     /**
      * Return the current rules specified.
      *
-     * @return array<string, array<string, mixed>>
+     * @return array<string, array<string|int, mixed>>
      */
     public function getRules(): array
     {
