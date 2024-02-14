@@ -15,12 +15,12 @@
         {
             "name": "Edson Nascimento",
             "email": "theoriginal@myoriginalcodes.com",
-            "homepage": "https://myoriginalcodes.com",
-            "role": "developer"
+            "role": "developer",
+            "homepage": "https://myoriginalcodes.com"
         }
     ],
     "support": {
-        "email": "theoriginal@originalcodes.com"
+        "email": "theoriginal@myoriginalcodes.com"
     },
     "minimum-stability": "stable",
     "require": {
@@ -32,6 +32,9 @@
         ],
         "stan": [
             "./vendor/bin/phpstan analyse --level=9 src tests"
+        ],
+        "coverage": [
+            "./vendor/bin/phpunit --coverage-html coverage"
         ]
     },
     "require-dev": {
