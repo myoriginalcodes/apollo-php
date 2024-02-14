@@ -29,7 +29,6 @@ class OnlyLettersTest extends TestCase
     public function ensureValidationWorksUsingValidValues(string $value, string $bagKey): void
     {
         $this->onlyLetters($value, $bagKey);
-
         $this->assertEmpty(self::$errorsBag);
     }
 
@@ -38,7 +37,6 @@ class OnlyLettersTest extends TestCase
     public function ensureValidationNotAcceptsCharsOtherThanLetters(string $value, string $bagKey): void
     {
         $this->onlyLetters($value, $bagKey);
-
         $this->assertArrayHasKey($bagKey, self::$errorsBag);
     }
 
@@ -49,7 +47,6 @@ class OnlyLettersTest extends TestCase
         self::$throwExceptions = true;
 
         $this->expectException(OnlyLettersException::class);
-
         $this->onlyLetters($value, $bagKey);
     }
 

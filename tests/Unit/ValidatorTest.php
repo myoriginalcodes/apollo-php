@@ -24,4 +24,27 @@ class ValidatorTest extends TestCase
 
         $this->assertInstanceOf(Validator::class, $instance);
     }
+
+    #[Test]
+    public function shouldClearErrorsBagOnEachValidation(): void
+    {
+        $this->validator->setRules([
+            'field' => [
+                'only_letters'
+            ]
+        ]);
+        $this->validator->setValues([
+            'field' => 'abcd abcd'
+        ]);
+        $this->validator->validate();
+
+        $this->assertArrayHasKey('field', $this->validator->getErrorsBag());
+
+        $this->validator->setValues([
+            'field' => 'abcd'
+        ]);
+        $this->validator->validate();
+
+        $this->assertEmpty($this->validator->getErrorsBag());
+    }
 }
