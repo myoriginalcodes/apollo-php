@@ -46,6 +46,18 @@ class Validator
          */
         public array $values = []
     ){}
+
+    /**
+     * Set the rules for validation.
+     *
+     * @param array<string, array<string|int, mixed>> $rules
+     *
+     * @return void
+     */
+    public function setRules(array $rules): void
+    {   
+        $this->rules = $rules;
+    }
     
     /**
      * Set or modify the values that need to validated.
@@ -58,17 +70,15 @@ class Validator
     {   
         $this->values = array_merge($this->values, $values);
     }
-    
-    /**
-     * Set the rules for validation.
-     *
-     * @param array<string, array<string|int, mixed>> $rules
-     *
-     * @return void
-     */
-    public function setRules(array $rules): void
-    {   
-        $this->rules = $rules;
+
+    private function setExceptionsBehavior(bool $behavior): void
+    {
+        self::$throwExceptions = $behavior;
+    }
+
+    private function setErrorsBag(array $bag): void
+    {
+        self::$errorsBag = $bag;
     }
     
     /**
@@ -102,6 +112,11 @@ class Validator
         return self::$errorsBag;
     }
 
+    private function clearErrorsBag(): void
+    {
+        $this->setErrorsBag([]);
+    }
+
     /**
      * Return the exceptions behavior if set to true 
      * the method will thown all exceptions.
@@ -115,11 +130,12 @@ class Validator
 
     public function validate(bool $throwExceptions = false): Validator
     {   
+        $this->clearErrorsBag();
+        $this->setExceptionsBehavior($throwExceptions);
+
         if(0 === count($this->rules) && 0 === count($this->values)){
             return $this;   
         }
-
-        self::$throwExceptions = $throwExceptions;
         
         foreach($this->rules as $field => $validators){
             if(is_array($validators)){
@@ -147,6 +163,7 @@ class Validator
                 }
             }
         }
+
         return $this;
     }
 }
