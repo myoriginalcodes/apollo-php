@@ -8,12 +8,14 @@ use MyOriginalCodes\ApolloPhp\Exceptions\OnlyLettersException;
 
 trait OnlyLetters
 {
-    public function only_letters(string $value, mixed $bagKey, ...$args): void
+    private string $defaultRegularExpression = "/[A-Za-z]/";
+
+    public function only_letters(string $value, mixed $bagKey, mixed $args = null): void
     {
         $this->onlyLetters($value, $bagKey, $args);
     }
 
-    public function onlyLetters(string $value, mixed $bagKey, ...$args): void
+    public function onlyLetters(string $value, mixed $bagKey, mixed $args = null): void
     {
         $regularExpression = $this->getRegularExpression($args);
 
@@ -25,18 +27,20 @@ trait OnlyLetters
         }
     }
 
-    private function getRegularExpression(array $args): string
+    private function getRegularExpression(mixed $args): string
     {   
-        foreach($args as $arg => $settings){ 
-            foreach($settings as $setting => $value){
-                if('allow_spaces' === $setting){ 
-                    if(true === $value){
-                        return "/^[a-zA-Z\s]*$/";
-                    }
+        if(!is_array($args)){
+            return $this->defaultRegularExpression;
+        }
+        
+        foreach($args as $setting => $value){
+            if('allow_spaces' === $setting){
+                if(true === $value){
+                    return "/^[a-zA-Z\s]*$/";
                 }
             }
         }
 
-        return "/[A-Za-z]/";
+        return $this->defaultRegularExpression;
     }
 }
